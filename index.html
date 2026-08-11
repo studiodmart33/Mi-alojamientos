@@ -2,51 +2,25 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#111111">
 
-<title>URCIT 7.2 | Transporte Seguro</title>
+<title>URCIT SAFE 7.3</title>
 
-<!-- Leaflet: mapa -->
-<link
- rel="stylesheet"
- href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
+<script src="https://unpkg.com/html5-qrcode"></script>
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
     padding:0;
 }
 
-:root{
-    --yellow:#ffc400;
-    --black:#111;
-    --dark:#1d1d1d;
-    --white:#fff;
-    --gray:#f3f4f6;
-    --text:#202124;
-    --muted:#70757a;
-    --blue:#123b68;
-    --green:#16a34a;
-    --red:#dc2626;
-}
-
 body{
     font-family:Arial,Helvetica,sans-serif;
-    background:#e8eaed;
-    color:var(--text);
-}
-
-button,
-input{
-    font:inherit;
-}
-
-button{
-    border:0;
-    cursor:pointer;
+    background:#e9eaec;
+    color:#202124;
 }
 
 .app{
@@ -55,8 +29,6 @@ button{
     min-height:100vh;
     margin:auto;
     background:white;
-    position:relative;
-    overflow:hidden;
 }
 
 /* HEADER */
@@ -68,423 +40,269 @@ button{
     border-radius:0 0 25px 25px;
 }
 
-.header-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
 .logo{
-    color:var(--yellow);
+    color:#ffc400;
     font-size:30px;
     font-weight:900;
     letter-spacing:2px;
 }
 
 .slogan{
-    margin-top:7px;
     color:#ddd;
+    margin-top:6px;
     font-size:13px;
-}
-
-.icon-btn{
-    width:40px;
-    height:40px;
-    border-radius:50%;
-    background:#303030;
-    color:white;
-}
-
-/* PAGES */
-
-.page{
-    display:none;
-    padding-bottom:90px;
-}
-
-.page.active{
-    display:block;
-}
-
-/* MAP */
-
-.map-container{
-    margin:15px;
-    border-radius:22px;
-    overflow:hidden;
-    position:relative;
-    box-shadow:0 5px 18px rgba(0,0,0,.15);
-}
-
-#map{
-    width:100%;
-    height:310px;
-}
-
-.map-status{
-    position:absolute;
-    z-index:500;
-    top:12px;
-    left:12px;
-    background:white;
-    padding:9px 12px;
-    border-radius:12px;
-    font-size:12px;
-    font-weight:bold;
-    box-shadow:0 3px 10px rgba(0,0,0,.2);
-}
-
-/* DESTINO */
-
-.destination{
-    margin:15px;
-    background:var(--gray);
-    padding:15px;
-    border-radius:18px;
-}
-
-.destination-title{
-    font-weight:bold;
-    font-size:13px;
-    margin-bottom:9px;
-}
-
-.search{
-    background:white;
-    border-radius:14px;
-    display:flex;
-    gap:9px;
-    padding:12px;
-}
-
-.search input{
-    width:100%;
-    border:0;
-    outline:0;
-}
-
-/* SERVICES */
-
-.services{
-    margin:15px;
-}
-
-.service{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    border:2px solid #eee;
-    padding:13px;
-    border-radius:16px;
-    margin-bottom:9px;
-}
-
-.service.selected{
-    border-color:var(--yellow);
-    background:#fffbea;
-}
-
-.service-icon{
-    width:43px;
-    height:43px;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#f1f1f1;
-    font-size:22px;
-}
-
-.service-info{
-    flex:1;
-}
-
-.service-info strong{
-    display:block;
-}
-
-.service-info small{
-    color:var(--muted);
-}
-
-.price{
-    font-weight:bold;
-}
-
-/* BUTTONS */
-
-.main-btn{
-    width:calc(100% - 30px);
-    margin:0 15px 15px;
-    padding:16px;
-    border-radius:15px;
-    background:var(--yellow);
-    color:#111;
-    font-weight:900;
-    font-size:15px;
-}
-
-.blue-btn{
-    width:100%;
-    padding:14px;
-    border-radius:14px;
-    background:var(--blue);
-    color:white;
-    font-weight:bold;
-}
-
-.red-btn{
-    width:100%;
-    padding:14px;
-    border-radius:14px;
-    background:var(--red);
-    color:white;
-    font-weight:bold;
-}
-
-/* CARDS */
-
-.card{
-    margin:15px;
-    padding:18px;
-    border-radius:20px;
-    border:1px solid #eee;
-    box-shadow:0 4px 16px rgba(0,0,0,.06);
-}
-
-.card-title{
-    font-weight:900;
-    margin-bottom:9px;
-}
-
-.dark-card{
-    background:linear-gradient(135deg,#111,#292929);
-    color:white;
-}
-
-.points{
-    font-size:30px;
-    font-weight:900;
-    margin:7px 0;
-}
-
-.progress{
-    height:8px;
-    border-radius:20px;
-    background:#ddd;
-    overflow:hidden;
-    margin-top:10px;
-}
-
-.progress span{
-    display:block;
-    height:100%;
-    width:80%;
-    background:var(--yellow);
 }
 
 /* SECURITY */
 
-.safe{
+.safe-header{
     text-align:center;
-    padding:25px 15px;
+    padding:28px 20px 10px;
 }
 
 .shield{
-    width:90px;
-    height:90px;
-    border-radius:50%;
+    width:95px;
+    height:95px;
     margin:auto;
+    border-radius:50%;
     background:#eaf3ff;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:45px;
+    font-size:48px;
+}
+
+.safe-header h1{
+    margin-top:15px;
+}
+
+.safe-header p{
+    color:#70757a;
+    margin-top:7px;
+}
+
+/* SCANNER */
+
+.scanner-card{
+    margin:15px;
+    padding:15px;
+    border-radius:20px;
+    background:#f7f7f7;
+    border:1px solid #eee;
 }
 
 #reader{
     width:100%;
-    max-width:360px;
-    margin:20px auto;
-    border-radius:16px;
     overflow:hidden;
-}
-
-.scan-result{
-    display:none;
-    padding:15px;
-    margin-top:15px;
     border-radius:15px;
-    background:#ecfdf3;
-    border:1px solid #bbf7d0;
-    color:#166534;
-    text-align:left;
+    background:#111;
 }
 
-.scan-result.show{
+.scan-btn{
+    width:100%;
+    padding:15px;
+    margin-top:12px;
+    border:0;
+    border-radius:14px;
+    background:#123b68;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* TEST */
+
+.test-card{
+    margin:15px;
+    padding:18px;
+    border-radius:20px;
+    background:#fffbea;
+    border:1px solid #ffe27a;
+}
+
+.test-card h3{
+    margin-bottom:7px;
+}
+
+.test-card p{
+    color:#666;
+    font-size:13px;
+    margin-bottom:12px;
+}
+
+.test-btn{
+    width:100%;
+    padding:13px;
+    margin-top:8px;
+    border:0;
+    border-radius:12px;
+    background:#ffc400;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* RESULT */
+
+.result{
+    display:none;
+    margin:15px;
+    border-radius:22px;
+    overflow:hidden;
+    border:2px solid #22c55e;
+    background:white;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.result.show{
     display:block;
 }
 
-/* PROFILE */
-
-.profile{
+.result-header{
+    background:#16a34a;
+    color:white;
+    padding:18px;
     text-align:center;
-    padding:25px 15px;
 }
 
-.avatar{
-    width:85px;
-    height:85px;
-    border-radius:50%;
-    background:var(--yellow);
-    display:flex;
-    justify-content:center;
-    align-items:center;
+.result-header .check{
     font-size:38px;
-    margin:auto;
 }
 
-.level{
-    display:inline-block;
-    margin-top:10px;
-    background:#eaf0f7;
-    color:var(--blue);
-    padding:7px 13px;
+.result-header h2{
+    margin-top:6px;
+}
+
+.driver{
+    padding:20px;
+}
+
+.driver-photo{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    margin:auto;
+    background:#ffc400;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:40px;
+}
+
+.driver-name{
+    text-align:center;
+    margin-top:12px;
+    font-size:21px;
+    font-weight:bold;
+}
+
+.driver-level{
+    display:block;
+    width:max-content;
+    margin:7px auto 20px;
+    padding:6px 12px;
     border-radius:20px;
+    background:#eef2ff;
+    color:#123b68;
     font-size:12px;
     font-weight:bold;
 }
 
-/* REWARDS */
-
-.reward{
-    display:flex;
-    gap:12px;
-    align-items:center;
-    padding:14px 0;
-    border-bottom:1px solid #eee;
-}
-
-.reward:last-child{
-    border-bottom:0;
-}
-
-.reward-icon{
-    width:45px;
-    height:45px;
-    border-radius:13px;
-    background:#fff5c7;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:22px;
-}
-
-/* NAV */
-
-.bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:50%;
-    transform:translateX(-50%);
-    width:100%;
-    max-width:520px;
-    background:white;
+.data{
     border-top:1px solid #eee;
+    padding:13px 0;
     display:flex;
-    justify-content:space-around;
-    padding:8px 3px calc(8px + env(safe-area-inset-bottom));
-    z-index:1000;
+    justify-content:space-between;
 }
 
-.nav-btn{
-    background:none;
+.data span{
     color:#777;
-    font-size:10px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:3px;
 }
 
-.nav-btn span{
-    font-size:21px;
+.data strong{
+    text-align:right;
 }
 
-.nav-btn.active{
-    color:#111;
+.status{
+    color:#16a34a;
+}
+
+.continue{
+    width:calc(100% - 30px);
+    margin:0 15px 18px;
+    padding:16px;
+    border:0;
+    border-radius:15px;
+    background:#ffc400;
+    font-weight:900;
+    cursor:pointer;
+}
+
+/* WARNING */
+
+.warning{
+    display:none;
+    margin:15px;
+    padding:18px;
+    border-radius:18px;
+    background:#fff1f2;
+    border:2px solid #fecdd3;
+    color:#9f1239;
+}
+
+.warning.show{
+    display:block;
+}
+
+.warning button{
+    width:100%;
+    margin-top:12px;
+    padding:13px;
+    border:0;
+    border-radius:12px;
+    background:#dc2626;
+    color:white;
     font-weight:bold;
 }
 
-/* MODAL */
+/* INFO */
 
-.modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.65);
-    z-index:2000;
-    align-items:flex-end;
-    justify-content:center;
+.info{
+    margin:15px;
+    padding:18px;
+    border-radius:20px;
+    background:#eef6ff;
+    border:1px solid #c9ddf4;
 }
 
-.modal.show{
-    display:flex;
+.info h3{
+    margin-bottom:8px;
 }
 
-.modal-content{
-    width:100%;
-    max-width:520px;
-    background:white;
-    border-radius:25px 25px 0 0;
-    padding:25px 20px 30px;
-}
-
-.modal-content h2{
-    margin-bottom:10px;
-}
-
-.close{
-    width:100%;
-    padding:14px;
-    margin-top:18px;
-    border-radius:13px;
-    background:#eee;
+.info p{
+    color:#555;
+    line-height:1.5;
+    font-size:14px;
 }
 
 /* TOAST */
 
 .toast{
     position:fixed;
+    bottom:25px;
     left:50%;
-    bottom:90px;
     transform:translateX(-50%);
     background:#111;
     color:white;
-    padding:12px 17px;
-    border-radius:12px;
-    opacity:0;
-    pointer-events:none;
-    transition:.3s;
-    z-index:3000;
+    padding:13px 18px;
+    border-radius:13px;
+    display:none;
+    z-index:5000;
 }
 
 .toast.show{
-    opacity:1;
+    display:block;
 }
 
-@media(min-width:700px){
-
-    body{
-        padding:20px 0;
-    }
-
-    .app{
-        min-height:calc(100vh - 40px);
-        border-radius:25px;
-        box-shadow:0 15px 50px rgba(0,0,0,.15);
-    }
-}
 </style>
 </head>
 
@@ -494,19 +312,8 @@ button{
 
 <header class="header">
 
-    <div class="header-row">
-
-        <div class="logo">
-            URCIT
-        </div>
-
-        <button
-            class="icon-btn"
-            onclick="navigate('perfil')"
-        >
-            👤
-        </button>
-
+    <div class="logo">
+        URCIT
     </div>
 
     <div class="slogan">
@@ -516,806 +323,502 @@ button{
 </header>
 
 
-<!-- ================= INICIO ================= -->
+<!-- SEGURIDAD -->
 
-<main id="inicio" class="page active">
+<section class="safe-header">
 
-    <section class="map-container">
+    <div class="shield">
+        🛡️
+    </div>
 
-        <div class="map-status" id="locationStatus">
-            📍 Buscando ubicación...
-        </div>
+    <h1>
+        URCIT SAFE
+    </h1>
 
-        <div id="map"></div>
+    <p>
+        Verifica antes de subir al vehículo.
+    </p>
 
-    </section>
-
-
-    <section class="destination">
-
-        <div class="destination-title">
-            ¿A dónde quieres ir?
-        </div>
-
-        <div class="search">
-
-            <span>📍</span>
-
-            <input
-                id="destination"
-                type="text"
-                placeholder="Escribe tu destino..."
-            >
-
-        </div>
-
-    </section>
+</section>
 
 
-    <section class="services">
+<!-- LECTOR -->
 
-        <div
-            class="service selected"
-            onclick="selectService(this,'Standard')"
-        >
+<section class="scanner-card">
 
-            <div class="service-icon">
-                🚗
-            </div>
+    <h3>
+        📷 Escanear QR
+    </h3>
 
-            <div class="service-info">
-                <strong>URCIT Standard</strong>
-                <small>Viaje económico</small>
-            </div>
+    <p style="color:#777;font-size:13px;margin:7px 0 12px;">
+        Escanea el código URCIT colocado en el vehículo o mostrado por el conductor.
+    </p>
 
-            <div class="price">
-                $3.50+
-            </div>
-
-        </div>
-
-
-        <div
-            class="service"
-            onclick="selectService(this,'Comfort')"
-        >
-
-            <div class="service-icon">
-                🚙
-            </div>
-
-            <div class="service-info">
-                <strong>URCIT Comfort</strong>
-                <small>Mayor comodidad</small>
-            </div>
-
-            <div class="price">
-                $5.00+
-            </div>
-
-        </div>
-
-
-        <div
-            class="service"
-            onclick="selectService(this,'Premium')"
-        >
-
-            <div class="service-icon">
-                ⭐
-            </div>
-
-            <div class="service-info">
-                <strong>URCIT Premium</strong>
-                <small>Experiencia superior</small>
-            </div>
-
-            <div class="price">
-                $7.00+
-            </div>
-
-        </div>
-
-    </section>
-
+    <div id="reader"></div>
 
     <button
-        class="main-btn"
-        onclick="requestRide()"
+        class="scan-btn"
+        onclick="startScanner()"
     >
-        🚗 SOLICITAR VIAJE
+        📷 ACTIVAR CÁMARA
     </button>
 
+</section>
 
-    <section class="card">
 
-        <div class="card-title">
-            🛡️ URCIT SAFE
+<!-- PRUEBAS -->
+
+<section class="test-card">
+
+    <h3>
+        🧪 Modo de prueba
+    </h3>
+
+    <p>
+        Estos botones simulan códigos QR registrados en URCIT.
+        Posteriormente los datos vendrán desde MySQL.
+    </p>
+
+    <button
+        class="test-btn"
+        onclick="verifyQR('URCIT-DRV-001')"
+    >
+        Probar conductor 001
+    </button>
+
+    <button
+        class="test-btn"
+        onclick="verifyQR('URCIT-DRV-002')"
+    >
+        Probar conductor 002
+    </button>
+
+    <button
+        class="test-btn"
+        onclick="verifyQR('URCIT-DRV-003')"
+    >
+        Probar conductor 003
+    </button>
+
+    <button
+        class="test-btn"
+        style="background:#ddd;"
+        onclick="verifyQR('URCIT-NO-AUTORIZADO')"
+    >
+        Probar QR no autorizado
+    </button>
+
+</section>
+
+
+<!-- RESULTADO -->
+
+<section
+    class="result"
+    id="verifiedResult"
+>
+
+    <div class="result-header">
+
+        <div class="check">
+            ✓
         </div>
-
-        <p>
-            Verifica el conductor y el vehículo antes de abordar.
-        </p>
-
-        <button
-            class="blue-btn"
-            style="margin-top:12px"
-            onclick="navigate('seguridad')"
-        >
-            VERIFICAR VIAJE
-        </button>
-
-    </section>
-
-
-    <section class="card dark-card">
-
-        <div class="card-title">
-            ⭐ URCIT PREMIUM
-        </div>
-
-        <div class="points">
-            1,280
-        </div>
-
-        <small>
-            Puntos URCIT
-        </small>
-
-        <div class="progress">
-            <span></span>
-        </div>
-
-        <p style="margin-top:9px">
-            80% hacia VIP
-        </p>
-
-    </section>
-
-</main>
-
-
-<!-- ================= VIAJES ================= -->
-
-<main id="viajes" class="page">
-
-    <div class="profile">
 
         <h2>
-            🚗 Mis viajes
+            CONDUCTOR VERIFICADO
         </h2>
 
-        <p style="color:#777;margin-top:7px">
-            Historial de viajes URCIT
+        <p>
+            Este conductor está registrado en URCIT
         </p>
 
     </div>
 
 
-    <div class="card">
+    <div class="driver">
 
-        <strong>
-            URC-2026-000421
-        </strong>
-
-        <p style="margin-top:10px">
-            📍 Punto de recogida
-        </p>
-
-        <p>
-            ↓
-        </p>
-
-        <p>
-            🏁 Destino
-        </p>
-
-        <strong>
-            $4.50
-        </strong>
-
-    </div>
-
-</main>
-
-
-<!-- ================= REWARDS ================= -->
-
-<main id="rewards" class="page">
-
-    <div class="profile">
-
-        <div class="avatar">
-            ⭐
-        </div>
-
-        <span class="level">
-            URCIT PREMIUM
-        </span>
-
-        <div class="points">
-            1,280
-        </div>
-
-        <p>
-            Puntos URCIT
-        </p>
-
-    </div>
-
-
-    <section class="card">
-
-        <div class="card-title">
-            🎁 Recompensas
-        </div>
-
-
-        <div class="reward">
-
-            <div class="reward-icon">
-                🎫
-            </div>
-
-            <div>
-                <strong>
-                    Tarjetas de descuento
-                </strong>
-
-                <small>
-                    Beneficios con comercios afiliados
-                </small>
-            </div>
-
-        </div>
-
-
-        <div class="reward">
-
-            <div class="reward-icon">
-                💰
-            </div>
-
-            <div>
-                <strong>
-                    Promociones
-                </strong>
-
-                <small>
-                    Campañas especiales
-                </small>
-            </div>
-
-        </div>
-
-
-        <div class="reward">
-
-            <div class="reward-icon">
-                🏖️
-            </div>
-
-            <div>
-                <strong>
-                    Premios vacacionales
-                </strong>
-
-                <small>
-                    Promociones especiales
-                </small>
-            </div>
-
-        </div>
-
-    </section>
-
-</main>
-
-
-<!-- ================= SEGURIDAD ================= -->
-
-<main id="seguridad" class="page">
-
-    <section class="safe">
-
-        <div class="shield">
-            🛡️
-        </div>
-
-        <h2 style="margin-top:15px">
-            URCIT SAFE
-        </h2>
-
-        <p style="color:#777;margin-top:7px">
-            Antes de subir, verifica.
-        </p>
-
-
-        <!-- Lector QR real -->
-
-        <div id="reader"></div>
-
-
-        <button
-            class="blue-btn"
-            onclick="startQR()"
-        >
-            📷 ACTIVAR CÁMARA
-        </button>
-
-
-        <div
-            class="scan-result"
-            id="scanResult"
-        >
-            <strong>✓ QR VERIFICADO</strong>
-
-            <p style="margin-top:7px">
-                Código leído correctamente.
-            </p>
-
-            <p
-                id="qrValue"
-                style="margin-top:7px"
-            ></p>
-
-        </div>
-
-    </section>
-
-
-    <section class="card">
-
-        <div class="card-title">
-            👤 Conductor
-        </div>
-
-        <strong>
-            Esperando verificación...
-        </strong>
-
-        <p style="color:#777;margin-top:7px">
-            Los datos aparecerán cuando exista un viaje activo.
-        </p>
-
-    </section>
-
-
-    <section class="card">
-
-        <div class="card-title">
-            🚗 Vehículo
-        </div>
-
-        <strong>
-            Esperando viaje...
-        </strong>
-
-        <p style="color:#777;margin-top:7px">
-            Los datos aparecerán después de la asignación.
-        </p>
-
-    </section>
-
-
-    <section class="card">
-
-        <div class="card-title">
-            🚨 Centro de seguridad
-        </div>
-
-        <p>
-            Herramientas disponibles durante el viaje.
-        </p>
-
-        <button
-            class="red-btn"
-            style="margin-top:12px"
-            onclick="showModal(
-                '🚨 Centro de seguridad',
-                'Esta versión solamente muestra la interfaz de demostración.'
-            )"
-        >
-            SOS
-        </button>
-
-    </section>
-
-</main>
-
-
-<!-- ================= PERFIL ================= -->
-
-<main id="perfil" class="page">
-
-    <section class="profile">
-
-        <div class="avatar">
+        <div class="driver-photo">
             👤
         </div>
 
-        <h2 style="margin-top:12px">
-            Usuario URCIT
-        </h2>
+        <div
+            class="driver-name"
+            id="driverName"
+        >
+            -
+        </div>
 
-        <span class="level">
-            URCIT PREMIUM
+        <span
+            class="driver-level"
+            id="driverLevel"
+        >
+            -
         </span>
 
-    </section>
 
+        <div class="data">
 
-    <section class="card">
+            <span>
+                ID conductor
+            </span>
 
-        <div class="card-title">
-            ⭐ Mi progreso
+            <strong id="driverId">
+                -
+            </strong>
+
         </div>
 
-        <div class="points">
-            1,280
+
+        <div class="data">
+
+            <span>
+                Vehículo
+            </span>
+
+            <strong id="vehicle">
+                -
+            </strong>
+
         </div>
 
-        <p>
-            Puntos URCIT
-        </p>
 
-        <div class="progress">
-            <span></span>
+        <div class="data">
+
+            <span>
+                Placa
+            </span>
+
+            <strong id="plate">
+                -
+            </strong>
+
         </div>
 
-        <p style="margin-top:8px;color:#777">
-            80% hacia VIP
-        </p>
 
-    </section>
+        <div class="data">
 
-</main>
+            <span>
+                Estado
+            </span>
 
+            <strong
+                class="status"
+                id="status"
+            >
+                ✓ VERIFICADO
+            </strong>
 
-<!-- ================= NAV ================= -->
-
-<nav class="bottom-nav">
-
-    <button
-        class="nav-btn active"
-        onclick="navigate('inicio',this)"
-    >
-        <span>🏠</span>
-        Inicio
-    </button>
-
-    <button
-        class="nav-btn"
-        onclick="navigate('viajes',this)"
-    >
-        <span>🚗</span>
-        Viajes
-    </button>
-
-    <button
-        class="nav-btn"
-        onclick="navigate('rewards',this)"
-    >
-        <span>🎁</span>
-        Rewards
-    </button>
-
-    <button
-        class="nav-btn"
-        onclick="navigate('seguridad',this)"
-    >
-        <span>🛡️</span>
-        Seguridad
-    </button>
-
-    <button
-        class="nav-btn"
-        onclick="navigate('perfil',this)"
-    >
-        <span>👤</span>
-        Perfil
-    </button>
-
-</nav>
-
-</div>
+        </div>
 
 
-<!-- MODAL -->
+        <div class="data">
 
-<div
-    class="modal"
-    id="modal"
->
+            <span>
+                Código QR
+            </span>
 
-    <div class="modal-content">
+            <strong id="qrCode">
+                -
+            </strong>
 
-        <h2 id="modalTitle">
-            URCIT
-        </h2>
-
-        <p id="modalMessage">
-            Mensaje
-        </p>
-
-        <button
-            class="close"
-            onclick="closeModal()"
-        >
-            CERRAR
-        </button>
+        </div>
 
     </div>
 
+
+    <button
+        class="continue"
+        onclick="continueRide()"
+    >
+        ✓ CONTINUAR CON EL VIAJE
+    </button>
+
+</section>
+
+
+<!-- NO AUTORIZADO -->
+
+<section
+    class="warning"
+    id="warning"
+>
+
+    <h3>
+        ⚠️ CONDUCTOR NO AUTORIZADO
+    </h3>
+
+    <p style="margin-top:8px;">
+        URCIT no encontró este código QR en el registro de conductores autorizados.
+    </p>
+
+    <p style="margin-top:8px;font-weight:bold;">
+        No continúes el viaje hasta verificar la identidad del conductor.
+    </p>
+
+    <button
+        onclick="reportDriver()"
+    >
+        🚨 REPORTAR
+    </button>
+
+</section>
+
+
+<!-- INFORMACIÓN -->
+
+<section class="info">
+
+    <h3>
+        🛡️ ¿Cómo funciona URCIT SAFE?
+    </h3>
+
+    <p>
+        Cada conductor y vehículo tendrá un identificador único.
+        Antes de iniciar el viaje, el usuario podrá escanear el QR
+        y comprobar que la información coincide con el conductor
+        y vehículo asignados.
+    </p>
+
+</section>
+
 </div>
 
 
-<!-- LEAFLET -->
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<!-- QR -->
-
-<script src="https://unpkg.com/html5-qrcode"></script>
+<div
+    class="toast"
+    id="toast"
+>
+    Mensaje
+</div>
 
 
 <script>
 
-/* ======================================
-   CONFIGURACIÓN
-====================================== */
+/* =====================================================
+   BASE DE DATOS TEMPORAL
+   ETAPA 7.3
 
-let selectedService = "Standard";
+   En la siguiente fase esta información será sustituida
+   por consultas PHP + MySQL.
+===================================================== */
 
-let map;
-let userMarker;
+const conductores = {
 
-let qrScanner;
+    "URCIT-DRV-001": {
 
+        id:"DRV-001",
 
-/* ======================================
-   MAPA
-====================================== */
+        nombre:"Carlos Mendoza",
 
-function initMap(){
+        nivel:"URCIT PREMIUM",
 
-    const defaultPosition = [8.9824,-79.5199];
+        vehiculo:"Toyota Corolla",
 
-    map = L.map("map").setView(
-        defaultPosition,
-        13
-    );
+        placa:"AB1234",
 
-    L.tileLayer(
-        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        {
-            attribution:"© OpenStreetMap"
-        }
-    ).addTo(map);
+        estado:"VERIFICADO"
 
-    getLocation();
-}
+    },
 
 
-/* ======================================
-   GEOLOCALIZACIÓN
-====================================== */
+    "URCIT-DRV-002": {
 
-function getLocation(){
+        id:"DRV-002",
 
-    const status =
-        document.getElementById("locationStatus");
+        nombre:"Luis Rodríguez",
 
-    if(!navigator.geolocation){
+        nivel:"URCIT VIP",
 
-        status.textContent =
-            "📍 GPS no disponible";
+        vehiculo:"Hyundai Accent",
 
-        return;
-    }
+        placa:"BC5678",
 
-    navigator.geolocation.getCurrentPosition(
+        estado:"VERIFICADO"
 
-        function(position){
-
-            const lat =
-                position.coords.latitude;
-
-            const lng =
-                position.coords.longitude;
-
-            const userPosition =
-                [lat,lng];
-
-            map.setView(
-                userPosition,
-                16
-            );
-
-            if(userMarker){
-
-                userMarker.setLatLng(
-                    userPosition
-                );
-
-            }else{
-
-                userMarker =
-                    L.marker(userPosition)
-                    .addTo(map)
-                    .bindPopup(
-                        "<b>Tu ubicación</b><br>URCIT"
-                    );
-
-            }
-
-            status.textContent =
-                "🟢 Ubicación encontrada";
-
-        },
-
-        function(error){
-
-            status.textContent =
-                "⚠️ No se pudo obtener el GPS";
-
-            console.log(
-                "Geolocation error:",
-                error
-            );
-
-        },
-
-        {
-            enableHighAccuracy:true,
-            timeout:10000,
-            maximumAge:10000
-        }
-
-    );
-}
+    },
 
 
-/* ======================================
-   NAVEGACIÓN
-====================================== */
+    "URCIT-DRV-003": {
 
-function navigate(pageId,button){
+        id:"DRV-003",
 
-    document
-        .querySelectorAll(".page")
-        .forEach(
-            page => page.classList.remove("active")
-        );
+        nombre:"Miguel González",
 
-    const page =
-        document.getElementById(pageId);
+        nivel:"URCIT STANDARD",
 
-    if(page){
+        vehiculo:"Kia Rio",
 
-        page.classList.add("active");
+        placa:"CD9012",
+
+        estado:"VERIFICADO"
 
     }
 
-    document
-        .querySelectorAll(".nav-btn")
-        .forEach(
-            btn => btn.classList.remove("active")
-        );
-
-    if(button){
-
-        button.classList.add("active");
-
-    }
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+};
 
 
-    /* Si entra a seguridad, no iniciar cámara automáticamente */
+/* =====================================================
+   VARIABLES
+===================================================== */
 
-    if(pageId !== "seguridad"){
-
-        stopQR();
-
-    }
-}
+let scanner = null;
 
 
-/* ======================================
-   SERVICIOS
-====================================== */
+/* =====================================================
+   VERIFICAR QR
+===================================================== */
 
-function selectService(element,service){
+function verifyQR(code){
 
-    document
-        .querySelectorAll(".service")
-        .forEach(
-            item => item.classList.remove("selected")
-        );
+    const result =
+        document.getElementById("verifiedResult");
 
-    element.classList.add("selected");
-
-    selectedService = service;
-
-}
+    const warning =
+        document.getElementById("warning");
 
 
-/* ======================================
-   SOLICITUD
-====================================== */
+    result.classList.remove("show");
 
-function requestRide(){
+    warning.classList.remove("show");
 
-    const destination =
-        document
-        .getElementById("destination")
-        .value
-        .trim();
 
-    if(!destination){
+    /* Buscar conductor */
 
-        showModal(
-            "📍 Falta el destino",
-            "Escribe primero el lugar al que deseas viajar."
+    const driver =
+        conductores[code];
+
+
+    /* NO EXISTE */
+
+    if(!driver){
+
+        warning.classList.add("show");
+
+        showToast(
+            "⚠️ QR no autorizado"
         );
 
         return;
+
     }
 
-    showModal(
-        "🚗 Solicitud URCIT",
-        "Se simulará una búsqueda de conductor para URCIT "
-        + selectedService
-        + " hacia "
-        + destination
-        + "."
+
+    /* EXISTE */
+
+    document.getElementById("driverName")
+        .textContent = driver.nombre;
+
+    document.getElementById("driverLevel")
+        .textContent = driver.nivel;
+
+    document.getElementById("driverId")
+        .textContent = driver.id;
+
+    document.getElementById("vehicle")
+        .textContent = driver.vehiculo;
+
+    document.getElementById("plate")
+        .textContent = driver.placa;
+
+    document.getElementById("status")
+        .textContent = "✓ " + driver.estado;
+
+    document.getElementById("qrCode")
+        .textContent = code;
+
+
+    result.classList.add("show");
+
+
+    showToast(
+        "✓ Conductor verificado"
     );
+
+
+    /* Desplazar hacia resultado */
+
+    setTimeout(function(){
+
+        result.scrollIntoView({
+            behavior:"smooth"
+        });
+
+    },200);
+
 }
 
 
-/* ======================================
-   QR
-====================================== */
+/* =====================================================
+   CÁMARA QR
+===================================================== */
 
-function startQR(){
+function startScanner(){
 
-    if(qrScanner){
+    if(scanner){
+
+        showToast(
+            "La cámara ya está activa"
+        );
 
         return;
 
     }
 
-    qrScanner =
+
+    scanner =
         new Html5Qrcode("reader");
 
+
     const config = {
+
         fps:10,
+
         qrbox:{
             width:250,
             height:250
         }
+
     };
 
-    qrScanner
+
+    scanner
         .start(
+
             {
                 facingMode:"environment"
             },
+
             config,
-            onQRSuccess,
-            onQRError
+
+            function(decodedText){
+
+                /* QR detectado */
+
+                verifyQR(decodedText);
+
+                stopScanner();
+
+            },
+
+            function(errorMessage){
+
+                /* No mostrar errores de
+                   lectura continuamente */
+
+            }
+
         )
+
         .catch(function(error){
 
-            qrScanner = null;
+            scanner = null;
 
-            showModal(
-                "📷 Cámara",
-                "No fue posible activar la cámara. Comprueba que el navegador tenga permiso para utilizarla y que la página se ejecute mediante HTTPS o localhost."
+            showToast(
+                "No se pudo activar la cámara"
+            );
+
+            alert(
+                "Comprueba los permisos de cámara. Para utilizar el lector QR, abre la página mediante HTTPS o localhost."
             );
 
         });
@@ -1323,139 +826,92 @@ function startQR(){
 }
 
 
-function onQRSuccess(decodedText){
+/* =====================================================
+   DETENER ESCÁNER
+===================================================== */
 
-    const result =
-        document.getElementById("scanResult");
+function stopScanner(){
 
-    const value =
-        document.getElementById("qrValue");
-
-    value.textContent =
-        "Código: " + decodedText;
-
-    result.classList.add("show");
-
-    stopQR();
-
-    showToast(
-        "✓ Código QR leído correctamente"
-    );
-
-}
-
-
-function onQRError(errorMessage){
-
-    /* No mostrar mensajes continuamente:
-       el lector intenta detectar el QR varias veces por segundo. */
-
-}
-
-
-function stopQR(){
-
-    if(!qrScanner){
+    if(!scanner){
 
         return;
 
     }
 
-    qrScanner
+
+    scanner
         .stop()
         .then(function(){
 
-            qrScanner.clear();
-            qrScanner = null;
+            scanner.clear();
+
+            scanner = null;
 
         })
         .catch(function(){
 
-            qrScanner = null;
+            scanner = null;
 
         });
 
 }
 
 
-/* ======================================
-   MODAL
-====================================== */
+/* =====================================================
+   CONTINUAR VIAJE
+===================================================== */
 
-function showModal(title,message){
+function continueRide(){
 
-    document
-        .getElementById("modalTitle")
-        .textContent = title;
-
-    document
-        .getElementById("modalMessage")
-        .textContent = message;
-
-    document
-        .getElementById("modal")
-        .classList.add("show");
-}
-
-
-function closeModal(){
-
-    document
-        .getElementById("modal")
-        .classList.remove("show");
+    showToast(
+        "✓ Conductor autorizado. Viaje habilitado."
+    );
 
 }
 
 
-/* ======================================
-   TOAST
-====================================== */
+/* =====================================================
+   REPORTAR
+===================================================== */
+
+function reportDriver(){
+
+    showToast(
+        "🚨 Reporte preparado para URCIT."
+    );
+
+}
+
+
+/* =====================================================
+   MENSAJES
+===================================================== */
 
 let toastTimer;
+
 
 function showToast(message){
 
     const toast =
-        document.createElement("div");
+        document.getElementById("toast");
 
-    toast.textContent = message;
+    toast.textContent =
+        message;
 
-    toast.style.position = "fixed";
-    toast.style.bottom = "90px";
-    toast.style.left = "50%";
-    toast.style.transform = "translateX(-50%)";
-    toast.style.background = "#111";
-    toast.style.color = "#fff";
-    toast.style.padding = "12px 17px";
-    toast.style.borderRadius = "12px";
-    toast.style.zIndex = "5000";
+    toast.classList.add("show");
 
-    document.body.appendChild(toast);
 
     clearTimeout(toastTimer);
+
 
     toastTimer =
         setTimeout(function(){
 
-            toast.remove();
+            toast.classList.remove("show");
 
-        },2500);
+        },3000);
 
 }
-
-
-/* ======================================
-   INICIAR
-====================================== */
-
-window.addEventListener(
-    "load",
-    function(){
-
-        initMap();
-
-    }
-);
 
 </script>
 
