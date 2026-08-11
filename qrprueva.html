@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111111">
+
+<title>URCIT SAFE 7.3</title>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#e9eaec;
+    color:#202124;
+}
+
+.app{
+    width:100%;
+    max-width:520px;
+    min-height:100vh;
+    margin:auto;
+    background:white;
+}
+
+/* HEADER */
+
+.header{
+    background:linear-gradient(135deg,#111,#292929);
+    color:white;
+    padding:18px;
+    border-radius:0 0 25px 25px;
+}
+
+.logo{
+    color:#ffc400;
+    font-size:30px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+.slogan{
+    color:#ddd;
+    margin-top:6px;
+    font-size:13px;
+}
+
+/* SECURITY */
+
+.safe-header{
+    text-align:center;
+    padding:28px 20px 10px;
+}
+
+.shield{
+    width:95px;
+    height:95px;
+    margin:auto;
+    border-radius:50%;
+    background:#eaf3ff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:48px;
+}
+
+.safe-header h1{
+    margin-top:15px;
+}
+
+.safe-header p{
+    color:#70757a;
+    margin-top:7px;
+}
+
+/* SCANNER */
+
+.scanner-card{
+    margin:15px;
+    padding:15px;
+    border-radius:20px;
+    background:#f7f7f7;
+    border:1px solid #eee;
+}
+
+#reader{
+    width:100%;
+    overflow:hidden;
+    border-radius:15px;
+    background:#111;
+}
+
+.scan-btn{
+    width:100%;
+    padding:15px;
+    margin-top:12px;
+    border:0;
+    border-radius:14px;
+    background:#123b68;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* TEST */
+
+.test-card{
+    margin:15px;
+    padding:18px;
+    border-radius:20px;
+    background:#fffbea;
+    border:1px solid #ffe27a;
+}
+
+.test-card h3{
+    margin-bottom:7px;
+}
+
+.test-card p{
+    color:#666;
+    font-size:13px;
+    margin-bottom:12px;
+}
+
+.test-btn{
+    width:100%;
+    padding:13px;
+    margin-top:8px;
+    border:0;
+    border-radius:12px;
+    background:#ffc400;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* RESULT */
+
+.result{
+    display:none;
+    margin:15px;
+    border-radius:22px;
+    overflow:hidden;
+    border:2px solid #22c55e;
+    background:white;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.result.show{
+    display:block;
+}
+
+.result-header{
+    background:#16a34a;
+    color:white;
+    padding:18px;
+    text-align:center;
+}
+
+.result-header .check{
+    font-size:38px;
+}
+
+.result-header h2{
+    margin-top:6px;
+}
+
+.driver{
+    padding:20px;
+}
+
+.driver-photo{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    margin:auto;
+    background:#ffc400;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:40px;
+}
+
+.driver-name{
+    text-align:center;
+    margin-top:12px;
+    font-size:21px;
+    font-weight:bold;
+}
+
+.driver-level{
+    display:block;
+    width:max-content;
+    margin:7px auto 20px;
+    padding:6px 12px;
+    border-radius:20px;
+    background:#eef2ff;
+    color:#123b68;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.data{
+    border-top:1px solid #eee;
+    padding:13px 0;
+    display:flex;
+    justify-content:space-between;
+}
+
+.data span{
+    color:#777;
+}
+
+.data strong{
+    text-align:right;
+}
+
+.status{
+    color:#16a34a;
+}
+
+.continue{
+    width:calc(100% - 30px);
+    margin:0 15px 18px;
+    padding:16px;
+    border:0;
+    border-radius:15px;
+    background:#ffc400;
+    font-weight:900;
+    cursor:pointer;
+}
+
+/* WARNING */
+
+.warning{
+    display:none;
+    margin:15px;
+    padding:18px;
+    border-radius:18px;
+    background:#fff1f2;
+    border:2px solid #fecdd3;
+    color:#9f1239;
+}
+
+.warning.show{
+    display:block;
+}
+
+.warning button{
+    width:100%;
+    margin-top:12px;
+    padding:13px;
+    border:0;
+    border-radius:12px;
+    background:#dc2626;
+    color:white;
+    font-weight:bold;
+}
+
+/* INFO */
+
+.info{
+    margin:15px;
+    padding:18px;
+    border-radius:20px;
+    background:#eef6ff;
+    border:1px solid #c9ddf4;
+}
+
+.info h3{
+    margin-bottom:8px;
+}
+
+.info p{
+    color:#555;
+    line-height:1.5;
+    font-size:14px;
+}
+
+/* TOAST */
+
+.toast{
+    position:fixed;
+    bottom:25px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#111;
+    color:white;
+    padding:13px 18px;
+    border-radius:13px;
+    display:none;
+    z-index:5000;
+}
+
+.toast.show{
+    display:block;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="header">
+
+    <div class="logo">
+        URCIT
+    </div>
+
+    <div class="slogan">
+        Tu seguridad. Tu viaje. Tu beneficio.
+    </div>
+
+</header>
+
+
+<!-- SEGURIDAD -->
+
+<section class="safe-header">
+
+    <div class="shield">
+        🛡️
+    </div>
+
+    <h1>
+        URCIT SAFE
+    </h1>
+
+    <p>
+        Verifica antes de subir al vehículo.
+    </p>
+
+</section>
+
+
+<!-- LECTOR -->
+
+<section class="scanner-card">
+
+    <h3>
+        📷 Escanear QR
+    </h3>
+
+    <p style="color:#777;font-size:13px;margin:7px 0 12px;">
+        Escanea el código URCIT colocado en el vehículo o mostrado por el conductor.
+    </p>
+
+    <div id="reader"></div>
+
+    <button
+        class="scan-btn"
+        onclick="startScanner()"
+    >
+        📷 ACTIVAR CÁMARA
+    </button>
+
+</section>
+
+
+<!-- PRUEBAS -->
+
+<section class="test-card">
+
+    <h3>
+        🧪 Modo de prueba
+    </h3>
+
+    <p>
+        Estos botones simulan códigos QR registrados en URCIT.
+        Posteriormente los datos vendrán desde MySQL.
+    </p>
+
+    <button
+        class="test-btn"
+        onclick="verifyQR('URCIT-DRV-001')"
+    >
+        Probar conductor 001
+    </button>
+
+    <button
+        class="test-btn"
+        onclick="verifyQR('URCIT-DRV-002')"
+    >
+        Probar conductor 002
+    </button>
+
+    <button
+        class="test-btn"
+        onclick="verifyQR('URCIT-DRV-003')"
+    >
+        Probar conductor 003
+    </button>
+
+    <button
+        class="test-btn"
+        style="background:#ddd;"
+        onclick="verifyQR('URCIT-NO-AUTORIZADO')"
+    >
+        Probar QR no autorizado
+    </button>
+
+</section>
+
+
+<!-- RESULTADO -->
+
+<section
+    class="result"
+    id="verifiedResult"
+>
+
+    <div class="result-header">
+
+        <div class="check">
+            ✓
+        </div>
+
+        <h2>
+            CONDUCTOR VERIFICADO
+        </h2>
+
+        <p>
+            Este conductor está registrado en URCIT
+        </p>
+
+    </div>
+
+
+    <div class="driver">
+
+        <div class="driver-photo">
+            👤
+        </div>
+
+        <div
+            class="driver-name"
+            id="driverName"
+        >
+            -
+        </div>
+
+        <span
+            class="driver-level"
+            id="driverLevel"
+        >
+            -
+        </span>
+
+
+        <div class="data">
+
+            <span>
+                ID conductor
+            </span>
+
+            <strong id="driverId">
+                -
+            </strong>
+
+        </div>
+
+
+        <div class="data">
+
+            <span>
+                Vehículo
+            </span>
+
+            <strong id="vehicle">
+                -
+            </strong>
+
+        </div>
+
+
+        <div class="data">
+
+            <span>
+                Placa
+            </span>
+
+            <strong id="plate">
+                -
+            </strong>
+
+        </div>
+
+
+        <div class="data">
+
+            <span>
+                Estado
+            </span>
+
+            <strong
+                class="status"
+                id="status"
+            >
+                ✓ VERIFICADO
+            </strong>
+
+        </div>
+
+
+        <div class="data">
+
+            <span>
+                Código QR
+            </span>
+
+            <strong id="qrCode">
+                -
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <button
+        class="continue"
+        onclick="continueRide()"
+    >
+        ✓ CONTINUAR CON EL VIAJE
+    </button>
+
+</section>
+
+
+<!-- NO AUTORIZADO -->
+
+<section
+    class="warning"
+    id="warning"
+>
+
+    <h3>
+        ⚠️ CONDUCTOR NO AUTORIZADO
+    </h3>
+
+    <p style="margin-top:8px;">
+        URCIT no encontró este código QR en el registro de conductores autorizados.
+    </p>
+
+    <p style="margin-top:8px;font-weight:bold;">
+        No continúes el viaje hasta verificar la identidad del conductor.
+    </p>
+
+    <button
+        onclick="reportDriver()"
+    >
+        🚨 REPORTAR
+    </button>
+
+</section>
+
+
+<!-- INFORMACIÓN -->
+
+<section class="info">
+
+    <h3>
+        🛡️ ¿Cómo funciona URCIT SAFE?
+    </h3>
+
+    <p>
+        Cada conductor y vehículo tendrá un identificador único.
+        Antes de iniciar el viaje, el usuario podrá escanear el QR
+        y comprobar que la información coincide con el conductor
+        y vehículo asignados.
+    </p>
+
+</section>
+
+</div>
+
+
+<div
+    class="toast"
+    id="toast"
+>
+    Mensaje
+</div>
+
+
+<script>
+
+/* =====================================================
+   BASE DE DATOS TEMPORAL
+   ETAPA 7.3
+
+   En la siguiente fase esta información será sustituida
+   por consultas PHP + MySQL.
+===================================================== */
+
+const conductores = {
+
+    "URCIT-DRV-001": {
+
+        id:"DRV-001",
+
+        nombre:"Carlos Mendoza",
+
+        nivel:"URCIT PREMIUM",
+
+        vehiculo:"Toyota Corolla",
+
+        placa:"AB1234",
+
+        estado:"VERIFICADO"
+
+    },
+
+
+    "URCIT-DRV-002": {
+
+        id:"DRV-002",
+
+        nombre:"Luis Rodríguez",
+
+        nivel:"URCIT VIP",
+
+        vehiculo:"Hyundai Accent",
+
+        placa:"BC5678",
+
+        estado:"VERIFICADO"
+
+    },
+
+
+    "URCIT-DRV-003": {
+
+        id:"DRV-003",
+
+        nombre:"Miguel González",
+
+        nivel:"URCIT STANDARD",
+
+        vehiculo:"Kia Rio",
+
+        placa:"CD9012",
+
+        estado:"VERIFICADO"
+
+    }
+
+};
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let scanner = null;
+
+
+/* =====================================================
+   VERIFICAR QR
+===================================================== */
+
+function verifyQR(code){
+
+    const result =
+        document.getElementById("verifiedResult");
+
+    const warning =
+        document.getElementById("warning");
+
+
+    result.classList.remove("show");
+
+    warning.classList.remove("show");
+
+
+    /* Buscar conductor */
+
+    const driver =
+        conductores[code];
+
+
+    /* NO EXISTE */
+
+    if(!driver){
+
+        warning.classList.add("show");
+
+        showToast(
+            "⚠️ QR no autorizado"
+        );
+
+        return;
+
+    }
+
+
+    /* EXISTE */
+
+    document.getElementById("driverName")
+        .textContent = driver.nombre;
+
+    document.getElementById("driverLevel")
+        .textContent = driver.nivel;
+
+    document.getElementById("driverId")
+        .textContent = driver.id;
+
+    document.getElementById("vehicle")
+        .textContent = driver.vehiculo;
+
+    document.getElementById("plate")
+        .textContent = driver.placa;
+
+    document.getElementById("status")
+        .textContent = "✓ " + driver.estado;
+
+    document.getElementById("qrCode")
+        .textContent = code;
+
+
+    result.classList.add("show");
+
+
+    showToast(
+        "✓ Conductor verificado"
+    );
+
+
+    /* Desplazar hacia resultado */
+
+    setTimeout(function(){
+
+        result.scrollIntoView({
+            behavior:"smooth"
+        });
+
+    },200);
+
+}
+
+
+/* =====================================================
+   CÁMARA QR
+===================================================== */
+
+function startScanner(){
+
+    if(scanner){
+
+        showToast(
+            "La cámara ya está activa"
+        );
+
+        return;
+
+    }
+
+
+    scanner =
+        new Html5Qrcode("reader");
+
+
+    const config = {
+
+        fps:10,
+
+        qrbox:{
+            width:250,
+            height:250
+        }
+
+    };
+
+
+    scanner
+        .start(
+
+            {
+                facingMode:"environment"
+            },
+
+            config,
+
+            function(decodedText){
+
+                /* QR detectado */
+
+                verifyQR(decodedText);
+
+                stopScanner();
+
+            },
+
+            function(errorMessage){
+
+                /* No mostrar errores de
+                   lectura continuamente */
+
+            }
+
+        )
+
+        .catch(function(error){
+
+            scanner = null;
+
+            showToast(
+                "No se pudo activar la cámara"
+            );
+
+            alert(
+                "Comprueba los permisos de cámara. Para utilizar el lector QR, abre la página mediante HTTPS o localhost."
+            );
+
+        });
+
+}
+
+
+/* =====================================================
+   DETENER ESCÁNER
+===================================================== */
+
+function stopScanner(){
+
+    if(!scanner){
+
+        return;
+
+    }
+
+
+    scanner
+        .stop()
+        .then(function(){
+
+            scanner.clear();
+
+            scanner = null;
+
+        })
+        .catch(function(){
+
+            scanner = null;
+
+        });
+
+}
+
+
+/* =====================================================
+   CONTINUAR VIAJE
+===================================================== */
+
+function continueRide(){
+
+    showToast(
+        "✓ Conductor autorizado. Viaje habilitado."
+    );
+
+}
+
+
+/* =====================================================
+   REPORTAR
+===================================================== */
+
+function reportDriver(){
+
+    showToast(
+        "🚨 Reporte preparado para URCIT."
+    );
+
+}
+
+
+/* =====================================================
+   MENSAJES
+===================================================== */
+
+let toastTimer;
+
+
+function showToast(message){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent =
+        message;
+
+    toast.classList.add("show");
+
+
+    clearTimeout(toastTimer);
+
+
+    toastTimer =
+        setTimeout(function(){
+
+            toast.classList.remove("show");
+
+        },3000);
+
+}
+
+</script>
+
+</body>
+</html>
